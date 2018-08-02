@@ -19,6 +19,9 @@ All 3 methods return the total response time + json.
 - Synchronous: Call to all instances of the Back-End in a row (one after the other).
 - Concurrent: Call all the instances in parallel and gather the results.
 - Concurrent First: Call all the instances in parallel and wait for the first result. Use cancellation (Context).
+### Back-End
+Fake service which is having delay between 100 - 300 milliseconds.
+Get Id and return json of the Id and elapse time.
 # Phase 1: (Micro-Services based project)
 ## Technical Goals
 - Languages
