@@ -1,3 +1,24 @@
+# Phase 0
+- Languages
+    - Go
+- Tooling
+    - Helm (Package Manager)
+- Deployment
+    - Docker (services should be docker based)
+    - Orchestration
+        - K8s
+            - Docker for Windows
+            - GCP
+            - AKS
+
+## Services
+### Front-End
+Has 3 methods:
+All 3 methods return the total response time + json.
+
+- Synchronous: Call to all instances of the Back-End in a row (one after the other).
+- Concurrent: Call all the instances in parallel and gather the results.
+- Concurrent First: Call all the instances in parallel and wait for the first result. Use cancellation (Context).
 # Phase 1: (Micro-Services based project)
 ## Technical Goals
 - Languages
@@ -11,15 +32,15 @@
 - Deployment
     - Docker (services should be docker based)
     - Orchestration
-        - K8s 
+        - K8s
             - AWS
         - Service Fabric / [Mesh](https://docs.microsoft.com/en-us/azure/service-fabric-mesh/)
             - Azure
 ## Services
-### Stackoverflow scraper 
+### Stackoverflow scraper
 The **scraper** service it a batch service which listen to REDIS Queue (of user names) and grab information on a user (question, answers, ranks, etc).
 Send the Data to the **Persistance** Service
-### Feeder Service (Web API Front-End) 
+### Feeder Service (Web API Front-End)
 Get user names and send it to the REDIS Queue.
 ### Persistance Service (Back-End http service)
 Will be responsible to save the scaped data into Neo4J.
@@ -36,12 +57,12 @@ The scraper will be responsible for the following functionality:
             - User
             - Question
             - Answer
-- Search Stack overflow for matching (User, Question, Answer) 
+- Search Stack overflow for matching (User, Question, Answer)
 - check if the data already processed in the last day (REDIS key with expiration)
 - Download the page data (update the REDIS key)
 - Format it to well formatted xml (TBD)
 - Parse the data and form a info struct [User, Questions, Answers, Follower, Following, Answered To]
-- Save it Neo4J (Data + relationships within the data and to existing data) 
+- Save it Neo4J (Data + relationships within the data and to existing data)
 - resend recursive call into the queue (deep - 1, as long as it > 0)
 ##### Technical note
 The scraper will use go routine + cyclic channel in order to form the following steps
@@ -53,14 +74,14 @@ The scraper will use go routine + cyclic channel in order to form the following 
 - Storage and Queues
     - Kafka / NATS / RabbitMQ
 - Deployment
-    - Serverless: nne or more of the services should be deploy on Lambda / Azure Function   
+    - Serverless: nne or more of the services should be deploy on Lambda / Azure Function
 ### Services
 - Each stage will be operate as separate micro-service
 - TBD: the communication within the internal services (REDIS, Other Queue, Direct Http or gRpc)
 # Phase 3
 ## Technical Goals
 - Deployment
-    - Micro-Services platform ([Istio](https://istio.io/)) 
+    - Micro-Services platform ([Istio](https://istio.io/))
 - Monitoring
     - [Prometheus](https://prometheus.io/)
 - Tracing
@@ -69,3 +90,6 @@ The scraper will use go routine + cyclic channel in order to form the following 
     - ELK
 - Storage and Queues
     - ELK
+
+# Markdown Lint Help
+Markdown setting options <https://github.com/DavidAnson/vscode-markdownlint>
